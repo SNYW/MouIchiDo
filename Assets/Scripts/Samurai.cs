@@ -11,6 +11,9 @@ public class Samurai : MonoBehaviour
     public int comboMax;
     public bool inCombo;
 
+    public bool canWalk;
+    public float moveSpeed;
+
     private void Awake()
     {
         instance = this;
@@ -25,12 +28,32 @@ public class Samurai : MonoBehaviour
     
     void Update()
     {
+
+        animator.SetBool("walking", false);
+
         if (Input.GetKeyDown(KeyCode.Mouse0) && comboIndex == 1)
         {
-            if(CanCombo())
+            if (CanCombo())
             {
                 animator.Play("Attack" + comboIndex);
                 comboIndex++;
+                canWalk = false;
+            }
+        }
+        else
+        {
+            if (canWalk)
+            {
+                if (Input.GetKey(KeyCode.A))
+                {
+                    animator.SetBool("walking", true);
+                    transform.position += Vector3.left * Time.deltaTime * moveSpeed;
+                }
+                else if (Input.GetKey(KeyCode.D))
+                {
+                    animator.SetBool("walking", true);
+                    transform.position += Vector3.right * Time.deltaTime * moveSpeed;
+                }
             }
         }
     }
@@ -52,6 +75,7 @@ public class Samurai : MonoBehaviour
 
     public void Combo(string s)
     {
+                canWalk = false;
         animator.Play(s + comboIndex);
         comboIndex++;
     }
