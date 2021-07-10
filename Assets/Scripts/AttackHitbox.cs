@@ -8,6 +8,13 @@ public class AttackHitbox : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        parent.LightHit(collision.transform.position);
+        if(collision.gameObject.GetComponent<Enemy>() != null)
+        {
+            parent.LightHit(collision.gameObject);
+        }
+        else
+        {
+            parent.LightHit(collision.gameObject);
+        }
     }
 }

@@ -40,6 +40,12 @@ public class Samurai : MonoBehaviour
                 canWalk = false;
             }
         }
+        else if (Input.GetKeyDown(KeyCode.Mouse1) && canWalk)
+        {
+            animator.Play("Parry");
+            canWalk = false;
+        }
+
         else
         {
             if (canWalk)
@@ -78,5 +84,10 @@ public class Samurai : MonoBehaviour
                 canWalk = false;
         animator.Play(s + comboIndex);
         comboIndex++;
+    }
+
+    public void Parry()
+    {
+
     }
 }

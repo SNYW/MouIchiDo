@@ -3,9 +3,11 @@ using UnityEngine;
 public class HitboxManager : MonoBehaviour
 {
    public GameObject bloodSplat;
-   public void LightHit(Vector3 hitpos)
+   public virtual void LightHit(GameObject hitobject)
     {
-       var splat =  Instantiate(bloodSplat, hitpos, Quaternion.identity);
+       Enemy e = hitobject.GetComponent<Enemy>();
+       var splat =  Instantiate(bloodSplat, e.bleedPosition.position, Quaternion.identity);
        Destroy(splat, 1);
+       e.OnHit();
     }
 }
