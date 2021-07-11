@@ -32,7 +32,6 @@ public class GameManager : MonoBehaviour
         }
 
         enemies[0].active = true;
-        enemies[1].active = true;
         activeEnemy = enemies[0];
     }
 
@@ -45,7 +44,6 @@ public class GameManager : MonoBehaviour
     {
         enemies[0].active = true;
         activeEnemy = enemies[0];
-        enemies[1].active = true;
     }
 
 }

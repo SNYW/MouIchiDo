@@ -40,7 +40,7 @@ public class Samurai : MonoBehaviour
                 canWalk = false;
             }
         }
-        else if (Input.GetKeyDown(KeyCode.Mouse1) && canWalk)
+        else if (Input.GetKeyDown(KeyCode.Mouse1))
         {
             animator.Play("Parry");
             canWalk = false;
