@@ -12,20 +12,25 @@ public class GameManager : MonoBehaviour
     public GameObject[] enemyTypes;
     public List<Enemy> enemies;
     public Enemy activeEnemy;
-
+    
     private void Awake()
     {
         gm = this;
     }
 
-    private void Start()
+    private void Update()
+    {
+
+    }
+
+    public void StartGame()
     {
         float currX = spawnstartx;
         for (int i = 0; i < startEnemyAmount; i++)
         {
             var enemy = Instantiate(
                 enemyTypes[Random.Range(0, enemyTypes.Length - 1)],
-                new Vector3(currX+spawnOffset, -4.51f, 0),
+                new Vector3(currX + spawnOffset, -4.51f, 0),
                 Quaternion.identity).GetComponent<Enemy>();
             currX = enemy.transform.position.x;
             enemies.Add(enemy);
@@ -33,11 +38,6 @@ public class GameManager : MonoBehaviour
 
         enemies[0].active = true;
         activeEnemy = enemies[0];
-    }
-
-    private void Update()
-    {
-        activeEnemy.active = true;
     }
 
     public void ActivateNextEnemy()

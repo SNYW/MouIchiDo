@@ -19,6 +19,7 @@ public class Enemy : MonoBehaviour
 
     private void Start()
     {
+        sprite.material = Instantiate(sprite.material);
         active = false;
         canMove = true;
         hits = Random.Range(2, maxHits);
@@ -71,14 +72,10 @@ public class Enemy : MonoBehaviour
     {
         if (dead)
         {
-            sprite.color =
-                new Color(
-                sprite.color.r,
-                sprite.color.g,
-                sprite.color.b,
-                sprite.color.a - Time.deltaTime * fadeOutSpeed);
+            sprite.material.SetFloat("visibility",
+            sprite.material.GetFloat("visibility") - Time.deltaTime * fadeOutSpeed);
 
-            if (sprite.color.a <= 0)
+            if (sprite.material.GetFloat("visibility") <= 0)
             {
                 Destroy(gameObject);
             }
