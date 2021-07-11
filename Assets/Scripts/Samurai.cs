@@ -5,7 +5,7 @@ public class Samurai : MonoBehaviour
     public static Samurai instance;
     public int maxHits;
     public int currentHits;
-    private Animator animator;
+    public Animator animator;
 
     public int comboIndex;
     public int comboMax;

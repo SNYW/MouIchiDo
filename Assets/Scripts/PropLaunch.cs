@@ -12,26 +12,23 @@ public class PropLaunch : MonoBehaviour
     void Start()
     {
         sprite = GetComponent<SpriteRenderer>();
+        sprite.material = Instantiate(sprite.material);
         Launch();
     }
 
     // Update is called once per frame
     void Update()
     {
-        sprite.color =
-               new Color(
-               sprite.color.r,
-               sprite.color.g,
-               sprite.color.b,
-               sprite.color.a - Time.deltaTime * fadeOutSpeed);
+        sprite.material.SetFloat("visibility",
+        sprite.material.GetFloat("visibility") - Time.deltaTime * fadeOutSpeed);
 
-        if(sprite.color.a < 0.5f)
-        {
-            bleeding.Stop();
-        }
-        if (sprite.color.a <= 0)
+        if (sprite.material.GetFloat("visibility") <= 0)
         {
             Destroy(gameObject);
+        }
+        if (sprite.material.GetFloat("visibility") < 0.5f)
+        {
+            bleeding.Stop();
         }
     }
 
@@ -39,7 +36,7 @@ public class PropLaunch : MonoBehaviour
     {
         transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y, Random.Range(-45, 45));
         var grb = GetComponent<Rigidbody2D>();
-        grb.AddForce(transform.forward + Vector3.up* launchForce +Vector3.left, ForceMode2D.Impulse);
+        grb.AddForce(transform.forward + Vector3.up* Random.Range(launchForce-2, launchForce+2)+Vector3.left, ForceMode2D.Impulse);
         grb.AddTorque(Random.Range(2f, 4f), ForceMode2D.Impulse);
     }
 }

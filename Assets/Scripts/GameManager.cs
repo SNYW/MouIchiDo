@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Playables;
 
 public class GameManager : MonoBehaviour
 {
@@ -12,15 +13,21 @@ public class GameManager : MonoBehaviour
     public GameObject[] enemyTypes;
     public List<Enemy> enemies;
     public Enemy activeEnemy;
+
+    public bool cutscenepause1;
     
     private void Awake()
     {
+        cutscenepause1 = false;
         gm = this;
     }
 
     private void Update()
     {
-
+        if (cutscenepause1)
+        {
+            Samurai.instance.animator.Play("Cutscene1");
+        }
     }
 
     public void StartGame()
@@ -38,12 +45,24 @@ public class GameManager : MonoBehaviour
 
         enemies[0].active = true;
         activeEnemy = enemies[0];
+
     }
 
     public void ActivateNextEnemy()
     {
         enemies[0].active = true;
         activeEnemy = enemies[0];
+    }
+
+    public void PlayOpeningCutscene()
+    {
+        GetComponent<PlayableDirector>().Play();
+        cutscenepause1 = false;
+    }
+
+    public void PauseForMenu()
+    {
+        cutscenepause1 = true;
     }
 
 }

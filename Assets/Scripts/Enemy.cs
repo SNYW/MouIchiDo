@@ -7,7 +7,7 @@ public class Enemy : MonoBehaviour
 
     public Transform bleedPosition;
     public GameObject head;
-    private Animator animator;
+    public Animator animator;
     public SpriteRenderer sprite;
     public float fadeOutSpeed;
     public float attackRange;
@@ -54,10 +54,15 @@ public class Enemy : MonoBehaviour
         if (!dead)
         {
             dead = true;
+            active = true;
             animator.Play("Death");
-            Instantiate(head, bleedPosition.position, Quaternion.identity);
-            GameManager.gm.enemies.Remove(this);
-            GameManager.gm.ActivateNextEnemy();
+            var h = Instantiate(head, bleedPosition.position, Quaternion.identity);
+            h.transform.localScale = transform.localScale*6;
+            if (GameManager.gm.enemies.Contains(this))
+            {
+                GameManager.gm.enemies.Remove(this);
+                GameManager.gm.ActivateNextEnemy();
+            }
         }
     }
 
@@ -75,7 +80,7 @@ public class Enemy : MonoBehaviour
             sprite.material.SetFloat("visibility",
             sprite.material.GetFloat("visibility") - Time.deltaTime * fadeOutSpeed);
 
-            if (sprite.material.GetFloat("visibility") <= 0)
+            if (sprite.material.GetFloat("visibility") < 0)
             {
                 Destroy(gameObject);
             }

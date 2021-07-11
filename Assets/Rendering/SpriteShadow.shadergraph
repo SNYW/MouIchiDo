@@ -1147,7 +1147,7 @@
     },
     "m_Name": "visibility",
     "m_DefaultReferenceName": "Vector1_a72a2575987640b89d5458f4f09dace6",
-    "m_OverrideReferenceName": "",
+    "m_OverrideReferenceName": "visibility",
     "m_GeneratePropertyBlock": true,
     "m_Precision": 0,
     "overrideHLSLDeclaration": false,

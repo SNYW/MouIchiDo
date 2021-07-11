@@ -5,15 +5,21 @@ using UnityEngine;
 public class CutsceneOni : MonoBehaviour
 {
 
-    private List<Enemy> cutsceneEnemies;
+    public List<Enemy> cutsceneEnemies;
     public float killDelay;
 
     // Start is called before the first frame update
     void Start()
     {
+        cutsceneEnemies = new List<Enemy>();
         foreach(Enemy e in GetComponentsInChildren<Enemy>())
         {
             cutsceneEnemies.Add(e);
+        }
+
+        foreach(Enemy e in cutsceneEnemies)
+        {
+            e.GetComponent<Animator>().Play("CutsceneHold");
         }
     }
 
