@@ -15,6 +15,9 @@ public class GameManager : MonoBehaviour
     public Enemy activeEnemy;
     public PlayableDirector timeline;
 
+    //UI
+    public GameObject[] uiToDisable;
+
     public bool clickToResume;
     
     private void Awake()
@@ -38,8 +41,31 @@ public class GameManager : MonoBehaviour
                 UnpauseTimeline();
             }
         }
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            SkipCutscene();
+        }
+    }
 
-        
+    public void SkipCutscene()
+    {
+        timeline.Stop();
+        foreach (GameObject g in uiToDisable)
+        {
+            g.SetActive(false);
+        }
+        ClearEnemies();
+        SetupGamePositions();
+        StartGame();
+    }
+
+    public void ClearEnemies()
+    {
+        foreach (Enemy e in enemies)
+        {
+            enemies.Remove(e);
+            Destroy(e.gameObject);
+        }
     }
 
     public void CutscenePositions()
