@@ -15,9 +15,11 @@ public class Enemy : MonoBehaviour
 
     public bool dead;
     public bool canMove;
+    public bool active;
 
     private void Start()
     {
+        active = false;
         canMove = true;
         hits = Random.Range(2, maxHits);
         animator = GetComponent<Animator>();
@@ -26,11 +28,15 @@ public class Enemy : MonoBehaviour
 
     private void Update()
     {
-        ManageDeath();
-        if (canMove && !dead)
+        if (active)
         {
-            MoveDecision();
+            ManageDeath();
+            if (canMove && !dead)
+            {
+                MoveDecision();
+            }
         }
+       
     }
 
     public void OnHit()
@@ -49,6 +55,8 @@ public class Enemy : MonoBehaviour
             dead = true;
             animator.Play("Death");
             Instantiate(head, bleedPosition.position, Quaternion.identity);
+            GameManager.gm.enemies.Remove(this);
+            GameManager.gm.ActivateNextEnemy();
         }
     }
 
