@@ -6,8 +6,11 @@ public class HitboxManager : MonoBehaviour
    public virtual void LightHit(GameObject hitobject)
     {
        Enemy e = hitobject.GetComponent<Enemy>();
-       var splat =  Instantiate(bloodSplat, e.bleedPosition.position, Quaternion.identity);
-       Destroy(splat, 1);
-       e.OnHit();
+       if (e != null)
+       {
+            var splat = Instantiate(bloodSplat, e.bleedPosition.position, Quaternion.identity);
+            Destroy(splat, 1);
+            e.OnHit();
+       }
     }
 }

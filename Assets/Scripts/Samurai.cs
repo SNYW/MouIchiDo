@@ -86,8 +86,9 @@ public class Samurai : MonoBehaviour
         comboIndex++;
     }
 
-    public void Parry()
+    public void Parry(Enemy target)
     {
-
+        canWalk = true;
+        target.Parried();
     }
 }

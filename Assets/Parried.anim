@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Resheath
+  m_Name: Parried
   serializedVersion: 6
   m_Legacy: 0
   m_Compressed: 0
@@ -16,15 +16,32 @@ AnimationClip:
   m_EulerCurves: []
   m_PositionCurves: []
   m_ScaleCurves: []
-  m_FloatCurves: []
+  m_FloatCurves:
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: Infinity
+        outSlope: Infinity
+        tangentMode: 103
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_IsActive
+    path: Hitboxes/Attack
+    classID: 1
+    script: {fileID: 0}
   m_PPtrCurves:
   - curve:
     - time: 0
-      value: {fileID: 7616599782157131304, guid: fafc0fd772080f74baba2cac0ed10ba3, type: 3}
-    - time: 0.06666667
-      value: {fileID: -8081739902818717070, guid: 48aa104bd6ea26048b11efece2f5e7c0, type: 3}
-    - time: 0.25
-      value: {fileID: -8081739902818717070, guid: 48aa104bd6ea26048b11efece2f5e7c0, type: 3}
+      value: {fileID: 21300000, guid: bacc8fad0b7b7eb4980d9712ca757645, type: 3}
+    - time: 2
+      value: {fileID: 21300000, guid: bacc8fad0b7b7eb4980d9712ca757645, type: 3}
     attribute: m_Sprite
     path: Sprite
     classID: 212
@@ -37,6 +54,13 @@ AnimationClip:
   m_ClipBindingConstant:
     genericBindings:
     - serializedVersion: 2
+      path: 2496402720
+      attribute: 2086281974
+      script: {fileID: 0}
+      typeID: 1
+      customType: 0
+      isPPtrCurve: 0
+    - serializedVersion: 2
       path: 850496168
       attribute: 0
       script: {fileID: 0}
@@ -44,15 +68,14 @@ AnimationClip:
       customType: 23
       isPPtrCurve: 1
     pptrCurveMapping:
-    - {fileID: 7616599782157131304, guid: fafc0fd772080f74baba2cac0ed10ba3, type: 3}
-    - {fileID: -8081739902818717070, guid: 48aa104bd6ea26048b11efece2f5e7c0, type: 3}
-    - {fileID: -8081739902818717070, guid: 48aa104bd6ea26048b11efece2f5e7c0, type: 3}
+    - {fileID: 21300000, guid: bacc8fad0b7b7eb4980d9712ca757645, type: 3}
+    - {fileID: 21300000, guid: bacc8fad0b7b7eb4980d9712ca757645, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 0.26666668
+    m_StopTime: 2.0166667
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
@@ -67,7 +90,26 @@ AnimationClip:
     m_KeepOriginalPositionXZ: 0
     m_HeightFromFeet: 0
     m_Mirror: 0
-  m_EditorCurves: []
+  m_EditorCurves:
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: Infinity
+        outSlope: Infinity
+        tangentMode: 103
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_IsActive
+    path: Hitboxes/Attack
+    classID: 1
+    script: {fileID: 0}
   m_EulerEditorCurves: []
   m_HasGenericRootTransform: 0
   m_HasMotionFloatCurves: 0
