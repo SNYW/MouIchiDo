@@ -13,25 +13,74 @@ public class GameManager : MonoBehaviour
     public GameObject[] enemyTypes;
     public List<Enemy> enemies;
     public Enemy activeEnemy;
+    public PlayableDirector timeline;
 
-    public bool cutscenepause1;
+    public bool clickToResume;
     
     private void Awake()
     {
-        cutscenepause1 = false;
+        timeline = GetComponent<PlayableDirector>();
         gm = this;
+    }
+
+    private void Start()
+    {
+        CutscenePositions();
     }
 
     private void Update()
     {
-        if (cutscenepause1)
+        if (clickToResume)
         {
-            Samurai.instance.animator.Play("Cutscene1");
+            if (Input.GetKeyDown(KeyCode.Mouse0))
+            {
+                clickToResume = false;
+                UnpauseTimeline();
+            }
         }
+
+        
+    }
+
+    public void CutscenePositions()
+    {
+        Camera.main.transform.position = new Vector3(-34.18f, -1.2f, Camera.main.transform.position.z);
+        Samurai.instance.transform.position = new Vector3(-31.33f, Samurai.instance.transform.position.y, Samurai.instance.transform.position.z);
     }
 
     public void StartGame()
     {
+        timeline.Stop();
+        enemies[0].active = true;
+        activeEnemy = enemies[0];
+    }
+
+    public void ActivateNextEnemy()
+    {
+        enemies[0].active = true;
+        activeEnemy = enemies[0];
+    }
+
+    public void UnpauseTimeline()
+    {
+        timeline.playableGraph.GetRootPlayable(0).SetSpeed(1);
+    }
+
+    public void PauseTimeline()
+    {
+        timeline.playableGraph.GetRootPlayable(0).SetSpeed(0);
+    }
+    
+    public void PauseTimelineClickResume()
+    {
+        clickToResume = true;
+        timeline.playableGraph.GetRootPlayable(0).SetSpeed(0);
+    }
+
+    public void SetupGamePositions()
+    {
+        Camera.main.transform.position = new Vector3(-3.2f, -1.4f, Camera.main.transform.position.z);
+        Samurai.instance.transform.position = new Vector3(-8.25f, Samurai.instance.transform.position.y, Samurai.instance.transform.position.z);
         float currX = spawnstartx;
         for (int i = 0; i < startEnemyAmount; i++)
         {
@@ -42,27 +91,6 @@ public class GameManager : MonoBehaviour
             currX = enemy.transform.position.x;
             enemies.Add(enemy);
         }
-
-        enemies[0].active = true;
-        activeEnemy = enemies[0];
-
-    }
-
-    public void ActivateNextEnemy()
-    {
-        enemies[0].active = true;
-        activeEnemy = enemies[0];
-    }
-
-    public void PlayOpeningCutscene()
-    {
-        GetComponent<PlayableDirector>().Play();
-        cutscenepause1 = false;
-    }
-
-    public void PauseForMenu()
-    {
-        cutscenepause1 = true;
     }
 
 }
