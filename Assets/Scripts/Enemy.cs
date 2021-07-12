@@ -29,7 +29,7 @@ public class Enemy : MonoBehaviour
 
     private void Update()
     {
-        if (active)
+        if (active && Samurai.instance.alive)
         {
             ManageDeath();
             if (canMove && !dead)

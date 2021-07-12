@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Playables;
 
 public class Samurai : MonoBehaviour
 {
@@ -15,6 +16,9 @@ public class Samurai : MonoBehaviour
     public float moveSpeed;
 
     public Collider2D[] hitBoxes;
+    public PlayableDirector timeline;
+
+    public bool alive;
 
     private void Awake()
     {
@@ -25,45 +29,57 @@ public class Samurai : MonoBehaviour
     {
         comboIndex = 1;
         animator = GetComponent<Animator>();
+        timeline = GetComponent<PlayableDirector>();
         ResetSamurai();
     }
     
     void Update()
     {
-
-        animator.SetBool("walking", false);
-
-        if (Input.GetKeyDown(KeyCode.Mouse0) && comboIndex == 1)
+        if (alive)
         {
-            if (CanCombo())
+            alive = currentHits > 0;
+            if (!alive)
             {
-                animator.Play("Attack" + comboIndex);
-                comboIndex++;
+                Die();
+            }
+
+            animator.SetBool("walking", false);
+
+            if (Input.GetKeyDown(KeyCode.Mouse0) && comboIndex == 1)
+            {
+                if (CanCombo())
+                {
+                    animator.Play("Attack" + comboIndex);
+                    comboIndex++;
+                    canWalk = false;
+                }
+            }
+            else if (Input.GetKeyDown(KeyCode.Mouse1))
+            {
+                animator.Play("Parry");
                 canWalk = false;
+                comboIndex = 1;
             }
-        }
-        else if (Input.GetKeyDown(KeyCode.Mouse1))
-        {
-            animator.Play("Parry");
-            canWalk = false;
-        }
 
-        else
-        {
-            if (canWalk)
+            else
             {
-                if (Input.GetKey(KeyCode.A))
+                if (canWalk)
                 {
-                    animator.SetBool("walking", true);
-                    transform.position += Vector3.left * Time.deltaTime * moveSpeed;
-                }
-                else if (Input.GetKey(KeyCode.D))
-                {
-                    animator.SetBool("walking", true);
-                    transform.position += Vector3.right * Time.deltaTime * moveSpeed;
+                    if (Input.GetKey(KeyCode.A))
+                    {
+                        animator.SetBool("walking", true);
+                        transform.position += Vector3.left * Time.deltaTime * moveSpeed;
+                    }
+                    else if (Input.GetKey(KeyCode.D))
+                    {
+                        animator.SetBool("walking", true);
+                        transform.position += Vector3.right * Time.deltaTime * moveSpeed;
+                    }
                 }
             }
         }
+        
+       
     }
 
     private void ResetSamurai()
@@ -95,7 +111,11 @@ public class Samurai : MonoBehaviour
             c.gameObject.SetActive(false);
         }
         canWalk = true;
-        comboIndex = 0;
         target.Parried();
+    }
+
+    public void Die()
+    {
+        timeline.Play();
     }
 }

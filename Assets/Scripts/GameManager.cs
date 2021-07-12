@@ -66,11 +66,19 @@ public class GameManager : MonoBehaviour
 
     public void ClearEnemies()
     {
-        foreach (Enemy e in enemies)
+        if(activeEnemy != null)
         {
-            enemies.Remove(e);
-            Destroy(e.gameObject);
+            enemies.Remove(activeEnemy);
+            Destroy(activeEnemy.gameObject);
         }
+        if(enemies.Count > 0)
+        {
+            foreach (Enemy e in enemies)
+            {
+                Destroy(e.gameObject);
+            }
+        }
+        enemies.Clear();
     }
 
     public void CutscenePositions()
@@ -110,9 +118,14 @@ public class GameManager : MonoBehaviour
 
     public void SetupGamePositions()
     {
+        ClearEnemies();
         Camera.main.transform.position = new Vector3(-3.2f, -1.4f, Camera.main.transform.position.z);
         Samurai.instance.transform.position = new Vector3(-8.25f, Samurai.instance.transform.position.y, Samurai.instance.transform.position.z);
+        Samurai.instance.currentHits = Samurai.instance.maxHits;
+        Samurai.instance.alive = true;
+        Samurai.instance.comboIndex = 1;
         float currX = spawnstartx;
+
         for (int i = 0; i < startEnemyAmount; i++)
         {
             var enemy = Instantiate(
@@ -122,8 +135,19 @@ public class GameManager : MonoBehaviour
             currX = enemy.transform.position.x;
             enemies.Add(enemy);
         }
+
         RainFollow.instance.follow = true;
         Camera.main.GetComponent<CameraFollow>().cameraFollow = true;
+    }
+
+    public void PauseDeathTimeline()
+    {
+        Samurai.instance.GetComponent<PlayableDirector>().playableGraph.GetRootPlayable(0).SetSpeed(0);
+    }
+
+    public void PlayDeathTimeline()
+    {
+        Samurai.instance.GetComponent<PlayableDirector>().playableGraph.GetRootPlayable(0).SetSpeed(1);
     }
 
 }
