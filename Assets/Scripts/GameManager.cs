@@ -45,6 +45,11 @@ public class GameManager : MonoBehaviour
         {
             SkipCutscene();
         }
+
+        if(activeEnemy != null)
+        {
+            activeEnemy.active = true;
+        }
     }
 
     public void SkipCutscene()
@@ -117,6 +122,8 @@ public class GameManager : MonoBehaviour
             currX = enemy.transform.position.x;
             enemies.Add(enemy);
         }
+        RainFollow.instance.follow = true;
+        Camera.main.GetComponent<CameraFollow>().cameraFollow = true;
     }
 
 }

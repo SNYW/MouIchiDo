@@ -14,6 +14,8 @@ public class Samurai : MonoBehaviour
     public bool canWalk;
     public float moveSpeed;
 
+    public Collider2D[] hitBoxes;
+
     private void Awake()
     {
         instance = this;
@@ -88,7 +90,12 @@ public class Samurai : MonoBehaviour
 
     public void Parry(Enemy target)
     {
+        foreach (Collider2D c in hitBoxes)
+        {
+            c.gameObject.SetActive(false);
+        }
         canWalk = true;
+        comboIndex = 0;
         target.Parried();
     }
 }
