@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
     public List<Enemy> enemies;
     public Enemy activeEnemy;
     public PlayableDirector timeline;
+    public PlayableDirector endGameTimeline;
 
     //UI
     public GameObject[] uiToDisable;
@@ -96,8 +97,15 @@ public class GameManager : MonoBehaviour
 
     public void ActivateNextEnemy()
     {
-        enemies[0].active = true;
-        activeEnemy = enemies[0];
+        if(enemies.Count <= 0)
+        {
+            WinGame();
+        }
+        else
+        {
+            enemies[0].active = true;
+            activeEnemy = enemies[0];
+        }
     }
 
     public void UnpauseTimeline()
@@ -130,7 +138,7 @@ public class GameManager : MonoBehaviour
         {
             var enemy = Instantiate(
                 enemyTypes[Random.Range(0, enemyTypes.Length - 1)],
-                new Vector3(currX + spawnOffset, -4.51f, 0),
+                new Vector3(currX + Random.Range(spawnOffset-0.5f, spawnOffset+0.5f), -4.51f, 0),
                 Quaternion.identity).GetComponent<Enemy>();
             currX = enemy.transform.position.x;
             enemies.Add(enemy);
@@ -148,6 +156,12 @@ public class GameManager : MonoBehaviour
     public void PlayDeathTimeline()
     {
         Samurai.instance.GetComponent<PlayableDirector>().playableGraph.GetRootPlayable(0).SetSpeed(1);
+    }
+
+    public void WinGame()
+    {
+        Samurai.instance.alive = false;
+        endGameTimeline.Play();
     }
 
 }

@@ -71,6 +71,7 @@ public class Enemy : MonoBehaviour
         animator.StopPlayback();
         canMove = false;
         animator.Play("Parried");
+        Samurai.instance.currentHits++;
     }
 
     private void ManageDeath()

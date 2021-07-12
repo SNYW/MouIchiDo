@@ -1,11 +1,14 @@
 using UnityEngine;
 using UnityEngine.Playables;
+using UnityEngine.UI;
 
 public class Samurai : MonoBehaviour
 {
     public static Samurai instance;
     public int maxHits;
     public int currentHits;
+    public Transform bleedanchor;
+    public bool parrying;
     public Animator animator;
 
     public int comboIndex;
@@ -15,10 +18,13 @@ public class Samurai : MonoBehaviour
     public bool canWalk;
     public float moveSpeed;
 
-    //public Collider2D[] hitBoxes;
     public PlayableDirector timeline;
 
     public bool alive;
+    public Image[] lives;
+    public GameObject livesPanel;
+    public Sprite lifeFull;
+    public Sprite lifeEmpty;
 
     private void Awake()
     {
@@ -31,6 +37,7 @@ public class Samurai : MonoBehaviour
         animator = GetComponent<Animator>();
         timeline = GetComponent<PlayableDirector>();
         timeline.Pause();
+        livesPanel.SetActive(alive);
         ResetSamurai();
     }
     
@@ -43,7 +50,7 @@ public class Samurai : MonoBehaviour
             {
                 Die();
             }
-
+            ManageLives();
             animator.SetBool("walking", false);
 
             if (Input.GetKeyDown(KeyCode.Mouse0) && comboIndex == 1)
@@ -71,7 +78,7 @@ public class Samurai : MonoBehaviour
                         animator.SetBool("walking", true);
                         transform.position += Vector3.left * Time.deltaTime * moveSpeed;
                     }
-                    else if (Input.GetKey(KeyCode.D))
+                    else if (Input.GetKey(KeyCode.D) && transform.position.x < GameManager.gm.activeEnemy.transform.position.x-1.3f)
                     {
                         animator.SetBool("walking", true);
                         transform.position += Vector3.right * Time.deltaTime * moveSpeed;
@@ -100,17 +107,13 @@ public class Samurai : MonoBehaviour
 
     public void Combo(string s)
     {
-                canWalk = false;
+        canWalk = false;
         animator.Play(s + comboIndex);
         comboIndex++;
     }
 
     public void Parry(Enemy target)
     {
-      /*  foreach (Collider2D c in hitBoxes)
-        {
-            c.gameObject.SetActive(false);
-        }*/
         canWalk = true;
         target.Parried();
     }
@@ -118,5 +121,22 @@ public class Samurai : MonoBehaviour
     public void Die()
     {
         timeline.Play();
+    }
+
+    public void ManageLives()
+    {
+        livesPanel.SetActive(alive);
+
+        for (int i = 0; i < lives.Length; i++)
+        {
+            if(i <= currentHits - 1)
+            {
+                lives[i].sprite = lifeFull;
+            }
+            else
+            {
+                lives[i].sprite = lifeEmpty;
+            }
+        }
     }
 }

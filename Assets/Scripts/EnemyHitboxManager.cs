@@ -8,6 +8,12 @@ public class EnemyHitboxManager :HitboxManager
 
     public override void LightHit(GameObject g)
     {
-        Debug.Log("hit");
+        if (!Samurai.instance.parrying)
+        {
+            Samurai.instance.currentHits--;
+            var splat = Instantiate(bloodSplat, Samurai.instance.bleedanchor.position, Quaternion.identity);
+            Destroy(splat, 1);
+        }
+
     }
 }
