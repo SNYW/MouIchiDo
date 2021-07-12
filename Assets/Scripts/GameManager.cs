@@ -44,10 +44,6 @@ public class GameManager : MonoBehaviour
                 UnpauseTimeline();
             }
         }
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            SkipCutscene();
-        }
 
         if(activeEnemy != null)
         {

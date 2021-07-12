@@ -5049,7 +5049,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7cc8313c98316bc4cafe76b3364d7689, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startEnemyAmount: 1
+  startEnemyAmount: 20
   spawnstartx: -2
   spawnOffset: 1
   enemyTypes:
@@ -24001,7 +24001,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1915462294}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -8.62, y: -4.476, z: -1.521484}
+  m_LocalPosition: {x: -8.91, y: -4.476, z: -1.521484}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1251981239}

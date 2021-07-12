@@ -81,7 +81,7 @@ public class Samurai : MonoBehaviour
             {
                 if (canWalk)
                 {
-                    if (Input.GetKey(KeyCode.A))
+                    if (Input.GetKey(KeyCode.A) && transform.position.x > -9)
                     {
                         animator.SetBool("walking", true);
                         transform.position += Vector3.left * Time.deltaTime * moveSpeed;
