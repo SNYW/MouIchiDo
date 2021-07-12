@@ -8,6 +8,6 @@ public class EnemyHitboxManager :HitboxManager
 
     public override void LightHit(GameObject g)
     {
-
+        Debug.Log("hit");
     }
 }

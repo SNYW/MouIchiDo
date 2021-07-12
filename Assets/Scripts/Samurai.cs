@@ -15,14 +15,14 @@ public class Samurai : MonoBehaviour
     public bool canWalk;
     public float moveSpeed;
 
-    public Collider2D[] hitBoxes;
+    //public Collider2D[] hitBoxes;
     public PlayableDirector timeline;
 
     public bool alive;
 
     private void Awake()
     {
-        instance = this;
+        instance = this; 
     }
     
     void Start()
@@ -30,6 +30,7 @@ public class Samurai : MonoBehaviour
         comboIndex = 1;
         animator = GetComponent<Animator>();
         timeline = GetComponent<PlayableDirector>();
+        timeline.Pause();
         ResetSamurai();
     }
     
@@ -106,10 +107,10 @@ public class Samurai : MonoBehaviour
 
     public void Parry(Enemy target)
     {
-        foreach (Collider2D c in hitBoxes)
+      /*  foreach (Collider2D c in hitBoxes)
         {
             c.gameObject.SetActive(false);
-        }
+        }*/
         canWalk = true;
         target.Parried();
     }
