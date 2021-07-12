@@ -53,11 +53,11 @@ public class Samurai : MonoBehaviour
         if (alive)
         {
             alive = currentHits > 0;
+            ManageLives();
             if (!alive)
             {
                 Die();
             }
-            ManageLives();
             animator.SetBool("walking", false);
 
             if (Input.GetKeyDown(KeyCode.Mouse0) && comboIndex == 1)
@@ -73,6 +73,7 @@ public class Samurai : MonoBehaviour
             else if (Input.GetKeyDown(KeyCode.Mouse1))
             {
                 animator.Play("Parry");
+                SwordSwingSound();
                 canWalk = false;
                 comboIndex = 1;
             }

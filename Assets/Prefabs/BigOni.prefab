@@ -5252,7 +5252,7 @@ MonoBehaviour:
   animator: {fileID: 0}
   sprite: {fileID: 3990429166484193853}
   fadeOutSpeed: 0.1
-  attackRange: 4
+  attackRange: 4.3
   moveSpeed: 1
   dead: 0
   canMove: 0

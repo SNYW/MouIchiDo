@@ -5246,7 +5246,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hits: 0
   maxHits: 5
-  attackDamage: 2
+  attackDamage: 1
   bleedPosition: {fileID: 6159128814548236679}
   head: {fileID: 5866661795766911985, guid: 74eee548cf67f844c9ff5bded8df3e3d, type: 3}
   animator: {fileID: 0}

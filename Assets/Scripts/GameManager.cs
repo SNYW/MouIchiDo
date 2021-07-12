@@ -36,6 +36,10 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
+        /*if (Input.GetKeyDown(KeyCode.Space))
+        {
+            SkipCutscene();
+        }*/
         if (clickToResume)
         {
             if (Input.GetKeyDown(KeyCode.Mouse0))
@@ -61,10 +65,7 @@ public class GameManager : MonoBehaviour
     public void SkipCutscene()
     {
         timeline.Stop();
-        foreach (GameObject g in uiToDisable)
-        {
-            g.SetActive(false);
-        }
+       
         ClearEnemies();
         SetupGamePositions();
         StartGame();
@@ -77,6 +78,7 @@ public class GameManager : MonoBehaviour
             enemies.Remove(activeEnemy);
             Destroy(activeEnemy.gameObject);
         }
+       
         if(enemies.Count > 0)
         {
             foreach (Enemy e in enemies)
@@ -99,10 +101,6 @@ public class GameManager : MonoBehaviour
         gameStart = true;
         enemies[0].active = true;
         activeEnemy = enemies[0]; 
-        foreach (GameObject g in uiToDisable)
-        {
-            g.SetActive(false);
-        }
     }
 
     public void ActivateNextEnemy()

@@ -78,7 +78,7 @@ public class Enemy : MonoBehaviour
         canMove = false;
         animator.Play("Parried");
         Samurai.instance.currentHits =
-            Mathf.Clamp(Samurai.instance.currentHits+1, 0, Samurai.instance.maxHits);
+            Mathf.Clamp(Samurai.instance.currentHits+2, 0, Samurai.instance.maxHits);
     }
 
     private void ManageDeath()
