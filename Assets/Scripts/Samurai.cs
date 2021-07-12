@@ -26,6 +26,12 @@ public class Samurai : MonoBehaviour
     public Sprite lifeFull;
     public Sprite lifeEmpty;
 
+    public AudioClip swordHit;
+    public AudioClip swordSwing;
+    public AudioClip parry;
+    public AudioSource soundPlayer;
+    public AudioSource parrySoundPlayer;
+
     private void Awake()
     {
         instance = this; 
@@ -36,6 +42,7 @@ public class Samurai : MonoBehaviour
         comboIndex = 1;
         animator = GetComponent<Animator>();
         timeline = GetComponent<PlayableDirector>();
+        soundPlayer = GetComponent<AudioSource>();
         timeline.Pause();
         livesPanel.SetActive(alive);
         ResetSamurai();
@@ -58,6 +65,7 @@ public class Samurai : MonoBehaviour
                 if (CanCombo())
                 {
                     animator.Play("Attack" + comboIndex);
+                    SwordSwingSound();
                     comboIndex++;
                     canWalk = false;
                 }
@@ -109,6 +117,7 @@ public class Samurai : MonoBehaviour
     {
         canWalk = false;
         animator.Play(s + comboIndex);
+        SwordSwingSound();
         comboIndex++;
     }
 
@@ -138,5 +147,21 @@ public class Samurai : MonoBehaviour
                 lives[i].sprite = lifeEmpty;
             }
         }
+    }
+
+    public void SwordSwingSound()
+    {
+        soundPlayer.pitch = Random.Range(0.8f, 1.2f);
+        soundPlayer.PlayOneShot(swordSwing);
+    }
+    public void SwordHitSound()
+    {
+        soundPlayer.pitch = Random.Range(0.8f, 1.2f);
+        soundPlayer.PlayOneShot(swordHit);
+    }
+    public void ParrySound()
+    {
+        parrySoundPlayer.pitch = Random.Range(0.8f, 1.2f);
+        parrySoundPlayer.PlayOneShot(parry);
     }
 }

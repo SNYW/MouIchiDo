@@ -4,6 +4,7 @@ public class Enemy : MonoBehaviour
 {
     public int hits;
     public int maxHits;
+    public int attackDamage;
 
     public Transform bleedPosition;
     public GameObject head;
@@ -22,7 +23,7 @@ public class Enemy : MonoBehaviour
         sprite.material = Instantiate(sprite.material);
         active = false;
         canMove = true;
-        hits = Random.Range(2, maxHits);
+        hits = Random.Range(3, maxHits);
         animator = GetComponent<Animator>();
         dead = false;
     }
@@ -43,6 +44,7 @@ public class Enemy : MonoBehaviour
     public void OnHit()
     {
         hits--;
+        active = true;
         if(hits <= 0)
         {
             Die();
@@ -56,6 +58,10 @@ public class Enemy : MonoBehaviour
             dead = true;
             active = true;
             animator.Play("Death");
+            Samurai.instance.SwordHitSound();
+            AudioSource a = GetComponent<AudioSource>();
+            a.pitch = Random.Range(0.8f, 1.2f);
+            a.Play();
             var h = Instantiate(head, bleedPosition.position, Quaternion.identity);
             h.transform.localScale = transform.localScale*6;
             if (GameManager.gm.enemies.Contains(this))
@@ -71,7 +77,8 @@ public class Enemy : MonoBehaviour
         animator.StopPlayback();
         canMove = false;
         animator.Play("Parried");
-        Samurai.instance.currentHits++;
+        Samurai.instance.currentHits =
+            Mathf.Clamp(Samurai.instance.currentHits+1, 0, Samurai.instance.maxHits);
     }
 
     private void ManageDeath()

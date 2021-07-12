@@ -20,11 +20,13 @@ public class GameManager : MonoBehaviour
     public GameObject[] uiToDisable;
 
     public bool clickToResume;
-    
+    public bool gameStart;
+
     private void Awake()
     {
         timeline = GetComponent<PlayableDirector>();
         gm = this;
+        gameStart = false;
     }
 
     private void Start()
@@ -50,6 +52,13 @@ public class GameManager : MonoBehaviour
         if(activeEnemy != null)
         {
             activeEnemy.active = true;
+        }
+        else
+        {
+            if (gameStart)
+            {
+                activeEnemy = enemies[0];
+            }
         }
     }
 
@@ -91,8 +100,13 @@ public class GameManager : MonoBehaviour
     public void StartGame()
     {
         timeline.Stop();
+        gameStart = true;
         enemies[0].active = true;
-        activeEnemy = enemies[0];
+        activeEnemy = enemies[0]; 
+        foreach (GameObject g in uiToDisable)
+        {
+            g.SetActive(false);
+        }
     }
 
     public void ActivateNextEnemy()
@@ -137,15 +151,16 @@ public class GameManager : MonoBehaviour
         for (int i = 0; i < startEnemyAmount; i++)
         {
             var enemy = Instantiate(
-                enemyTypes[Random.Range(0, enemyTypes.Length - 1)],
-                new Vector3(currX + Random.Range(spawnOffset-0.5f, spawnOffset+0.5f), -4.51f, 0),
+                enemyTypes[Random.Range(0, enemyTypes.Length)],
+                new Vector3(currX + Random.Range(spawnOffset-0.8f, spawnOffset), -4.51f, 0),
                 Quaternion.identity).GetComponent<Enemy>();
             currX = enemy.transform.position.x;
             enemies.Add(enemy);
         }
 
         RainFollow.instance.follow = true;
-        Camera.main.GetComponent<CameraFollow>().cameraFollow = true;
+        Camera.main.GetComponent<CameraFollow>().cameraFollow = true; 
+        
     }
 
     public void PauseDeathTimeline()
@@ -162,6 +177,15 @@ public class GameManager : MonoBehaviour
     {
         Samurai.instance.alive = false;
         endGameTimeline.Play();
+    }
+
+    public void PauseGameEndTimeline()
+    {
+        endGameTimeline.playableGraph.GetRootPlayable(0).SetSpeed(0);
+    }
+    public void UnpauseGameEndTimeline()
+    {
+        endGameTimeline.playableGraph.GetRootPlayable(0).SetSpeed(1);
     }
 
 }

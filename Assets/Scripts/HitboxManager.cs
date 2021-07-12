@@ -9,6 +9,7 @@ public class HitboxManager : MonoBehaviour
        if (e != null && !e.dead)
        {
             var splat = Instantiate(bloodSplat, e.bleedPosition.position, Quaternion.identity);
+            Samurai.instance.SwordHitSound();
             Destroy(splat, 1);
             e.OnHit();
        }

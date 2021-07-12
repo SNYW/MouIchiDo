@@ -10,7 +10,8 @@ public class EnemyHitboxManager :HitboxManager
     {
         if (!Samurai.instance.parrying)
         {
-            Samurai.instance.currentHits--;
+            Samurai.instance.currentHits-=parentEnemy.attackDamage;
+            Samurai.instance.SwordHitSound();
             var splat = Instantiate(bloodSplat, Samurai.instance.bleedanchor.position, Quaternion.identity);
             Destroy(splat, 1);
         }
